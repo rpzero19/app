@@ -27,6 +27,13 @@ jobs:
         run: |
           ls -al
 
+      - name: Debug SSH Key Secret
+        run: |
+          echo "EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}"
+          echo "HOST_DNS: ${{ secrets.HOST_DNS }}"
+          echo "USERNAME: ${{ secrets.USERNAME }}"
+
+
       - name: Deploy to EC2
         run: |          
           scp -i ${{ env.SSH_PRIVATE_KEY }} -r * ${{ env.REMOTE_USER }}@${{ env.REMOTE_HOST }}:/home/ubuntu/
