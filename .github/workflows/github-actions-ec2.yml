@@ -29,7 +29,7 @@ jobs:
 
       - name: Debug SSH Key Secret
         run: |
-          echo "EC2_SSH_KEY: ${ secrets.EC2_SSH_KEY }"
+          echo "EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}"
           echo "HOST_DNS: ${{ secrets.HOST_DNS }}"
           echo "USERNAME: ${{ secrets.USERNAME }}"
 
