@@ -33,19 +33,6 @@ jobs:
           echo "HOST_DNS: ${{ secrets.HOST_DNS }}"
           echo "USERNAME: ${{ secrets.USERNAME }}"
 
-      - name: Debug SSH Key File Presence
-        run: |
-          # Construct the full path to the private key file
-          PRIVATE_KEY_PATH="/github/home/${{ secrets.EC2_SSH_KEY }}"
-    
-          # Display the contents of the directory
-          ls -la "${PRIVATE_KEY_PATH}"
-
-          # Display the content of the private key (masked)
-          echo "EC2_SSH_KEY: ***"
-
-
-
       - name: Deploy to EC2        
         env:
           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
