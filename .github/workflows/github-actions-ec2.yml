@@ -29,7 +29,7 @@ jobs:
 
       - name: Debug SSH Key Secret
         run: |
-          echo "EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}"
+          echo "EC2_SSH_KEY: ${ secrets.EC2_SSH_KEY }"
           echo "HOST_DNS: ${{ secrets.HOST_DNS }}"
           echo "USERNAME: ${{ secrets.USERNAME }}"
 
@@ -46,12 +46,13 @@ jobs:
 
 
 
-      - name: Deploy to EC2
-        run: |          
-          scp -i ${{ env.SSH_PRIVATE_KEY }} -r * ${{ env.REMOTE_USER }}@${{ env.REMOTE_HOST }}:/home/ubuntu/
-          ssh -i ${{ env.SSH_PRIVATE_KEY }} ${{ env.REMOTE_USER }}@${{ env.REMOTE_HOST }} "cd /home/ubuntu/app && python3 index.py"
+      - name: Deploy to EC2        
         env:
           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
           REMOTE_USER: ${{ secrets.USERNAME }}
-          
+        run: |     
+          echo "$SSH_PRIVATE_KEY" > private_key && chmod 600 private_key
+            
+          scp -i ${ env.SSH_PRIVATE_KEY } -r * ${ env.REMOTE_USER }@${ env.REMOTE_HOST }:/home/ubuntu/
+          ssh -i ${ env.SSH_PRIVATE_KEY } ${ env.REMOTE_USER }@${ env.REMOTE_HOST } "cd /home/ubuntu/app && python3 index.py"
